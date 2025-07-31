@@ -7,7 +7,7 @@ import RegistrationForm from "./pages/registrationForm";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter >
+      <BrowserRouter basename="/veuz">
         <Routes>
           <Route path="/" element={<TicketGrid />} />
           <Route path="/registration" element={<RegistrationForm />} />
