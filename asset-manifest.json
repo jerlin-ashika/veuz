@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/veuz/static/css/main.4473a611.css",
-    "main.js": "/veuz/static/js/main.1fb2d4c9.js",
+    "main.js": "/veuz/static/js/main.65143844.js",
     "static/js/453.bf90b2fa.chunk.js": "/veuz/static/js/453.bf90b2fa.chunk.js",
     "static/media/body_bg.png": "/veuz/static/media/body_bg.b3a8e110da74bfe9c0b4.png",
     "static/media/banner.png": "/veuz/static/media/banner.44b44e49fba703540f06.png",
@@ -19,11 +19,11 @@
     "static/media/Allowed.svg": "/veuz/static/media/Allowed.a2dca0f250907adc033db18fc6117707.svg",
     "static/media/strike.svg": "/veuz/static/media/strike.c387664c68ee0a44cbe58d1259913e2e.svg",
     "main.4473a611.css.map": "/veuz/static/css/main.4473a611.css.map",
-    "main.1fb2d4c9.js.map": "/veuz/static/js/main.1fb2d4c9.js.map",
+    "main.65143844.js.map": "/veuz/static/js/main.65143844.js.map",
     "453.bf90b2fa.chunk.js.map": "/veuz/static/js/453.bf90b2fa.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4473a611.css",
-    "static/js/main.1fb2d4c9.js"
+    "static/js/main.65143844.js"
   ]
 }
