@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/veuz/static/css/main.4473a611.css",
+    "main.js": "/veuz/static/js/main.1fb2d4c9.js",
+    "static/js/453.bf90b2fa.chunk.js": "/veuz/static/js/453.bf90b2fa.chunk.js",
+    "static/media/body_bg.png": "/veuz/static/media/body_bg.b3a8e110da74bfe9c0b4.png",
+    "static/media/banner.png": "/veuz/static/media/banner.44b44e49fba703540f06.png",
+    "static/media/overlay_1.png": "/veuz/static/media/overlay_1.c9ccc8e1b6501c97331c.png",
+    "static/media/Alexandria-SemiBold.ttf": "/veuz/static/media/Alexandria-SemiBold.f75e797fc414c3e47c72.ttf",
+    "static/media/Alexandria-Medium.ttf": "/veuz/static/media/Alexandria-Medium.fc0e46a095c73245fa74.ttf",
+    "static/media/Alexandria-ExtraLight.ttf": "/veuz/static/media/Alexandria-ExtraLight.fe9f6bdf188f5830e553.ttf",
+    "static/media/Alexandria-Light.ttf": "/veuz/static/media/Alexandria-Light.a1e8308c65911d9c0144.ttf",
+    "static/media/Alexandria-Regular.ttf": "/veuz/static/media/Alexandria-Regular.0ba62e8e821928571872.ttf",
+    "static/media/overlay_3.png": "/veuz/static/media/overlay_3.1f34fae7274d2fd2ff67.png",
+    "static/media/overlay_2.png": "/veuz/static/media/overlay_2.dff277cf792ca7d84e31.png",
+    "static/media/modal_banner.png": "/veuz/static/media/modal_banner.79373aa7797ad2d45873.png",
+    "static/media/sub_banner.png": "/veuz/static/media/sub_banner.9ed121b0b9e78c367af3.png",
+    "index.html": "/veuz/index.html",
+    "static/media/Allowed.svg": "/veuz/static/media/Allowed.a2dca0f250907adc033db18fc6117707.svg",
+    "static/media/strike.svg": "/veuz/static/media/strike.c387664c68ee0a44cbe58d1259913e2e.svg",
+    "main.4473a611.css.map": "/veuz/static/css/main.4473a611.css.map",
+    "main.1fb2d4c9.js.map": "/veuz/static/js/main.1fb2d4c9.js.map",
+    "453.bf90b2fa.chunk.js.map": "/veuz/static/js/453.bf90b2fa.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4473a611.css",
+    "static/js/main.1fb2d4c9.js"
+  ]
+}
