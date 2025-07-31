@@ -22,7 +22,10 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("email")], "Emails must match")
     .required("Required"),
   nationality: yup.string().required("Required"),
-  mobile: yup.string().required("Required"),
+  mobile: yup
+    .string()
+    .required("Required")
+    .matches(/^[0-9]+$/, "Only numbers (0–9) are allowed"),
   company: yup.string().required("Required"),
   jobTitle: yup.string().required("Required"),
   companyType: yup.string().required("Required"),
@@ -38,6 +41,7 @@ export default function RegistrationForm() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [isTop, setIsTop] = useState(0);
+  const [showModal, setShowModal] = useState(false);
   const methods = useForm({
     resolver: yupResolver(schema),
     mode: "onTouched",
@@ -58,10 +62,23 @@ export default function RegistrationForm() {
   } = methods;
 
   const selectedWorkshops = watch("workshops") || [];
+  const watchFirstName =
+    watch("firstName") || watch("lastName")
+      ? `${watch("firstName")} ${watch("lastName")}`
+      : "Full Name";
+  const watchCompanyName = watch("company") ? watch("company") : "Company Name";
+  const watchJobTitle = watch("jobTitle") ? watch("jobTitle") : "Job Title";
+  const watchCountry = watch("country")
+    ? watch("country")
+    : "Country of Residence";
+  const watchComapnyType = watch("companyType")
+    ? watch("companyType")
+    : "Visitor";
 
   const onSubmit = (data) => {
     console.log("Final Submitted Data:", data);
     navigate("/registration-success");
+    localStorage.removeItem("ticketQuantities");
   };
 
   const handleNext = async () => {
@@ -71,8 +88,16 @@ export default function RegistrationForm() {
       setIsTop(isTop + 1);
     }
   };
-
-  const [showModal, setShowModal] = useState(false);
+  const [selectedTickets, setSelectedTickets] = useState([]);
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("ticketQuantities")) || {};
+    const selected = Object.entries(stored).map(([title, data]) => ({
+      title,
+      qty: data.qty,
+      price: data.price,
+    }));
+    setSelectedTickets(selected);
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -103,9 +128,16 @@ export default function RegistrationForm() {
                         <h2 className="text-md md:text-xl lg:text-3xl font-normal">
                           Registration Infomation 1
                         </h2>
-                        <div className="text-gray-200 font-light cus_text_gray px-2 py-1 bg-white bg-opacity-10 border border-white/10 rounded-md text-sm md:text-md lg:text-lg">
-                          PREMIUM TICKET - FREE incl. 19% VAT
-                        </div>
+                        {selectedTickets.length > 0 && (
+                          <div className="text-gray-200 font-light cus_text_gray px-2 py-1 bg-white bg-opacity-10 border border-white/10 rounded-md text-sm md:text-md lg:text-md">
+                            <span>
+                              {selectedTickets[0]?.title}
+                              {selectedTickets.length > 1 &&
+                                ` + ${selectedTickets.length - 1} more`}
+                            </span>
+                          </div>
+                        )}{" "}
+                        {/* PREMIUM TICKET - FREE incl. 19% VAT */}
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3 ms:p-6">
                         <div className="flex flex-col">
@@ -216,6 +248,7 @@ export default function RegistrationForm() {
                             {...register("mobile")}
                             placeholder="Mobile number *"
                             className="input"
+                            type="number"
                           />
                           {errors.mobile && (
                             <p className="text-red-500 text-sm">
@@ -336,9 +369,15 @@ export default function RegistrationForm() {
                         <h2 className="text-md md:text-xl lg:text-3xl font-normal">
                           Registration Infomation 2
                         </h2>
-                        <div className="text-gray-200 font-light cus_text_gray px-2 py-1 bg-white bg-opacity-10 border border-white/10 rounded-md text-sm md:text-md lg:text-lg">
-                          PREMIUM TICKET - FREE incl. 19% VAT
-                        </div>
+                        {selectedTickets.length > 0 && (
+                          <div className="text-gray-200 font-light cus_text_gray px-2 py-1 bg-white bg-opacity-10 border border-white/10 rounded-md text-sm md:text-md lg:text-md">
+                            <span>
+                              {selectedTickets[0]?.title}
+                              {selectedTickets.length > 1 &&
+                                ` + ${selectedTickets.length - 1} more`}
+                            </span>
+                          </div>
+                        )}{" "}
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3 ms:p-6">
                         <div className="flex flex-col">
@@ -419,9 +458,15 @@ export default function RegistrationForm() {
                         <h2 className="text-md md:text-xl lg:text-3xl font-normal">
                           Registration Infomation 3
                         </h2>
-                        <div className="text-gray-200 font-light cus_text_gray px-2 py-1 bg-white bg-opacity-10 border border-white/10 rounded-md text-sm md:text-md lg:text-lg">
-                          PREMIUM TICKET - FREE incl. 19% VAT
-                        </div>
+                        {selectedTickets.length > 0 && (
+                          <div className="text-gray-200 font-light cus_text_gray px-2 py-1 bg-white bg-opacity-10 border border-white/10 rounded-md text-sm md:text-md lg:text-md">
+                            <span>
+                              {selectedTickets[0]?.title}
+                              {selectedTickets.length > 1 &&
+                                ` + ${selectedTickets.length - 1} more`}
+                            </span>
+                          </div>
+                        )}{" "}
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3 ms:p-6">
                         <div className="flex flex-col">
@@ -534,21 +579,28 @@ export default function RegistrationForm() {
                         </div>
 
                         <div className="p-4 space-y-3 ">
-                          <div className="flex justify-between border-b pb-2">
-                            <span className="font-semibold">
-                              PREMIUM TICKET x 2
-                            </span>
-                            <span className="font-medium">EUR 40.19</span>
-                          </div>
-
-                          <div className="flex flex-col md:flex-row justify-between border-b pb-2">
+                          {selectedTickets.length > 0 ? (
+                            selectedTickets.map((ticket, index) => (
+                              <div className="flex justify-between border-b pb-2">
+                                <span className="font-semibold">
+                                  {ticket?.title} x {ticket?.qty}
+                                </span>
+                                <span className="font-medium">
+                                  EUR {ticket?.price * ticket?.qty}
+                                </span>
+                              </div>
+                            ))
+                          ) : (
+                            <div></div>
+                          )}
+                          {/* <div className="flex flex-col md:flex-row justify-between border-b pb-2">
                             <span className="font-semibold">
                               Student Ticket Access On Day 3 Only
                             </span>
                             <span className="text-black">
                               EUR 50.40 SUBJECT TO APPROVAL Incl. 19%
                             </span>
-                          </div>
+                          </div> */}
                         </div>
 
                         {/* Promo Code */}
@@ -576,9 +628,15 @@ export default function RegistrationForm() {
                           <span className="font-semibold text-lg">
                             Total:&nbsp;
                           </span>
-                          <span className="text-lg font-bold">EUR 300</span>
+                          <span className="text-lg font-bold">
+                            EUR{" "}
+                            {selectedTickets?.reduce(
+                              (a, b) => b?.price * b?.qty + a,
+                              0
+                            )}
+                          </span>
                           <span className="ml-1 text-sm text-gray-500">
-                            Incl. 19% VAT
+                            Incl. 20% VAT
                           </span>
                         </div>
 
@@ -639,20 +697,22 @@ export default function RegistrationForm() {
 
                       <div className="pt-8 pb-6 space-y-2  text-cus_text_gray text-md font-semibold ">
                         <p className="uppercase   text-lg font-bold mt-1">
-                          Full Name
+                          {watchFirstName}
                         </p>
-                        <p className="font-light ">Job Title</p>
-                        <p className="font-light ">Company Name</p>
-                        <p className="font-light ">Country of Residence</p>
+                        <p className="font-light ">{watchJobTitle}</p>
+                        <p className="font-light ">{watchCompanyName}</p>
+                        <p className="font-light ">{watchCountry}</p>
                       </div>
 
                       <div className="bg-gray-50 py-4 rounded-b-lg shadow-[0px_4.81px_33.7px_0px_#0000001F]">
                         <p className="text-gray-400 font-semibold text-md uppercase tracking-wide">
                           Badge Category
                         </p>
-                        <p className="text-2xl font-bold  tracking-wider text-black">
-                          VISITOR
-                        </p>
+                        {selectedTickets?.map((dt) => (
+                          <p className="uppercase text-md font-bold  tracking-wide text-black">
+                            {dt?.title}
+                          </p>
+                        ))}
                       </div>
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cardHeader from "../../images/ticket/header_overlay.png";
 import Overlay1 from "../../images/ticket/overlay_1.png";
 import Overlay2 from "../../images/ticket/overlay_2.png";
@@ -6,7 +6,6 @@ import Overlay3 from "../../images/ticket/overlay_3.png";
 import sponser from "../../images/common/sponser.png";
 import Allowed from "../../images/icons/Allowed.svg";
 import strikeImg from "../../images/icons/strike.svg";
-import { useNavigate } from "react-router-dom";
 
 function BadgeRibbon({ text }) {
   return (
@@ -53,9 +52,13 @@ export function TicketCard({
   priceLabel,
   quantity,
   overlayImg,
+  handleQuantityChange,
 }) {
-  const navigate = useNavigate();
-  const [quantityState, setQuantityState] = useState(quantity || 1);
+  const [quantityState, setQuantityState] = useState(quantity || 0);
+
+  useEffect(() => {
+    handleQuantityChange(quantityState, title, price);
+  }, [quantityState, quantity]);
   return (
     <div className="relative bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-900 rounded-3xl shadow-xl flex flex-col justify-between w-full  text-white">
       <div className="relative">
@@ -131,63 +134,60 @@ export function TicketCard({
                 quantity ? "h-[1.44px]" : "h-[0.74px]"
               }`}
             />
-            {quantity ? (
-              <div className="flex  items-center justify-between gap-4 text-white mt-4">
-                <div className="flex flex-col md:flex-row  gap-2">
-                  <div>
-                    <span className="text-sm md:text-md lg:text-lg justify-center font-bold">
-                      USD{" "}
-                      <div className="relative inline-block text-gray-400 font-bold pr-2">
-                        43
-                        <img
-                          className="absolute top-0 left-0 w-full h-full pointer-events-none"
-                          src={strikeImg}
-                          alt="strike"
-                        />
-                      </div>
-                    </span>
-                    <span className="text-sm md:text-md text-start font-semibold px-2 py-1 border border-white rounded-md bg-black">
-                      32.5
-                    </span>
-                  </div>
-                  <span className="text-xs font-light opacity-70  flex items-center">
-                    Incl. 20% VAT
-                  </span>
-                </div>
-                <div className="flex items-center border border-white rounded-md overflow-hidden">
-                  <button
-                    className="bg-black text-white px-3 py-1  text-[11px] lg:text-[13px]"
-                    onClick={() => setQuantityState((q) => Math.max(1, q - 1))}
-                  >
-                    -
-                  </button>
-                  <span className="bg-white text-black font-bold px-4 py-1  text-[11px] lg:text-[13px]">
-                    {quantityState}
-                  </span>
-                  <button
-                    className="bg-black text-white px-3 py-1  text-[11px] lg:text-[13px]"
-                    onClick={() => setQuantityState((q) => q + 1)}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-center justify-between mt-2">
+
+            <div className="flex  items-center justify-between gap-4 text-white mt-4">
+              <div className="flex flex-col md:flex-row  gap-2">
                 <div>
-                  <div className="text-sm md:text-md lg:text-lg  font-bold">
-                    {price}{" "}
-                  </div>
-                  <div className="text-[11px] text-gray-400">{priceLabel}</div>
+                  <span className="text-sm md:text-md lg:text-lg justify-center font-bold">
+                    USD{" "}
+                    <div className="relative inline-block text-gray-400 font-bold pr-2">
+                      43
+                      <img
+                        className="absolute top-0 left-0 w-full h-full pointer-events-none"
+                        src={strikeImg}
+                        alt="strike"
+                      />
+                    </div>
+                  </span>
+                  <span className="text-sm md:text-md text-start font-semibold px-2 py-1 border border-white rounded-md bg-black">
+                    {price}
+                  </span>
                 </div>
-                <button
-                  onClick={() => navigate("/registration")}
-                  className="bg-white text-black text-[11px] lg:text-[13px] font-bold px-3 uppercase py-1 rounded hover:bg-gray-200 transition"
-                >
-                  Buy Now
-                </button>
+                <span className="text-xs font-light opacity-70  flex items-center">
+                  Incl. 20% VAT
+                </span>
               </div>
-            )}
+              <div className="flex items-center border border-white rounded-md overflow-hidden">
+                {quantityState === 0 ? (
+                  <button
+                    onClick={() => setQuantityState((q) => Math.max(0, q + 1))}
+                    className="bg-white text-black text-[11px] lg:text-[13px] font-bold px-3 uppercase py-1 rounded hover:bg-gray-200 transition"
+                  >
+                    Buy Now
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      className="bg-black text-white px-3 py-1  text-[11px] lg:text-[13px]"
+                      onClick={() =>
+                        setQuantityState((q) => Math.max(0, q - 1))
+                      }
+                    >
+                      -
+                    </button>
+                    <span className="bg-white text-black font-bold px-4 py-1  text-[11px] lg:text-[13px]">
+                      {quantityState}
+                    </span>
+                    <button
+                      className="bg-black text-white px-3 py-1  text-[11px] lg:text-[13px]"
+                      onClick={() => setQuantityState((q) => q + 1)}
+                    >
+                      +
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
