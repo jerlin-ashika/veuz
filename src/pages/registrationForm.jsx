@@ -12,29 +12,29 @@ import ProductModal from "./components/productModal";
 import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
-  // firstName: yup.string().required("Required"),
-  // lastName: yup.string().required("Required"),
-  // country: yup.string().required("Required"),
-  // region: yup.string().required("Required"),
-  // email: yup.string().email().required("Required"),
-  // confirmEmail: yup
-  //   .string()
-  //   .oneOf([yup.ref("email")], "Emails must match")
-  //   .required("Required"),
-  // nationality: yup.string().required("Required"),
-  // mobile: yup
-  //   .string()
-  //   .required("Required")
-  //   .matches(/^[0-9]+$/, "Only numbers (0–9) are allowed"),
-  // company: yup.string().required("Required"),
-  // jobTitle: yup.string().required("Required"),
-  // companyType: yup.string().required("Required"),
-  // industry: yup.string().required("Required"),
-  // workshops: yup
-  //   .array()
-  //   .of(yup.string())
-  //   .max(6, "Select up to 6 workshops")
-  //   .min(1, "Please select at least one workshop"),
+  firstName: yup.string().required("Required"),
+  lastName: yup.string().required("Required"),
+  country: yup.string().required("Required"),
+  region: yup.string().required("Required"),
+  email: yup.string().email().required("Required"),
+  confirmEmail: yup
+    .string()
+    .oneOf([yup.ref("email")], "Emails must match")
+    .required("Required"),
+  nationality: yup.string().required("Required"),
+  mobile: yup
+    .string()
+    .required("Required")
+    .matches(/^[0-9]+$/, "Only numbers (0–9) are allowed"),
+  company: yup.string().required("Required"),
+  jobTitle: yup.string().required("Required"),
+  companyType: yup.string().required("Required"),
+  industry: yup.string().required("Required"),
+  workshops: yup
+    .array()
+    .of(yup.string())
+    .max(6, "Select up to 6 workshops")
+    .min(1, "Please select at least one workshop"),
 });
 
 export default function RegistrationForm() {
