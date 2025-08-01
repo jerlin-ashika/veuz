@@ -12,29 +12,29 @@ import ProductModal from "./components/productModal";
 import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
-  firstName: yup.string().required("Required"),
-  lastName: yup.string().required("Required"),
-  country: yup.string().required("Required"),
-  region: yup.string().required("Required"),
-  email: yup.string().email().required("Required"),
-  confirmEmail: yup
-    .string()
-    .oneOf([yup.ref("email")], "Emails must match")
-    .required("Required"),
-  nationality: yup.string().required("Required"),
-  mobile: yup
-    .string()
-    .required("Required")
-    .matches(/^[0-9]+$/, "Only numbers (0–9) are allowed"),
-  company: yup.string().required("Required"),
-  jobTitle: yup.string().required("Required"),
-  companyType: yup.string().required("Required"),
-  industry: yup.string().required("Required"),
-  workshops: yup
-    .array()
-    .of(yup.string())
-    .max(6, "Select up to 6 workshops")
-    .min(1, "Please select at least one workshop"),
+  // firstName: yup.string().required("Required"),
+  // lastName: yup.string().required("Required"),
+  // country: yup.string().required("Required"),
+  // region: yup.string().required("Required"),
+  // email: yup.string().email().required("Required"),
+  // confirmEmail: yup
+  //   .string()
+  //   .oneOf([yup.ref("email")], "Emails must match")
+  //   .required("Required"),
+  // nationality: yup.string().required("Required"),
+  // mobile: yup
+  //   .string()
+  //   .required("Required")
+  //   .matches(/^[0-9]+$/, "Only numbers (0–9) are allowed"),
+  // company: yup.string().required("Required"),
+  // jobTitle: yup.string().required("Required"),
+  // companyType: yup.string().required("Required"),
+  // industry: yup.string().required("Required"),
+  // workshops: yup
+  //   .array()
+  //   .of(yup.string())
+  //   .max(6, "Select up to 6 workshops")
+  //   .min(1, "Please select at least one workshop"),
 });
 
 export default function RegistrationForm() {
@@ -71,9 +71,6 @@ export default function RegistrationForm() {
   const watchCountry = watch("country")
     ? watch("country")
     : "Country of Residence";
-  const watchComapnyType = watch("companyType")
-    ? watch("companyType")
-    : "Visitor";
 
   const onSubmit = (data) => {
     console.log("Final Submitted Data:", data);
@@ -95,10 +92,12 @@ export default function RegistrationForm() {
       title,
       qty: data.qty,
       price: data.price,
+      features: data?.features || [],
     }));
     setSelectedTickets(selected);
   }, []);
 
+  console.log("Selected Tickets:", selectedTickets);
   return (
     <div className="min-h-screen">
       <div
@@ -331,7 +330,52 @@ export default function RegistrationForm() {
                             </span>
                           </div>
                         </div>
-                        <label className=" block mb-4 font-normal text-md">
+                        {/* <label className=" block mb-4 font-normal text-md">
+                          Select Services
+                        </label> */}
+                        <div className="grid grid-cols-1 sm:grid-cols-1 gap-5">
+                          {selectedTickets.map((item, idx) => (
+                            <>
+                              <label
+                                key={idx}
+                                className="flex items-center gap-2 font-normal text-md"
+                              >
+                                {/* <input
+                                type="checkbox"
+                                value={item?.title}
+                                {...register(`services_${idx}`)}
+                                className="w-[15px] h-[15px]"
+                                // disabled={
+                                //   selectedWorkshops.length >= 6 &&
+                                //   !selectedWorkshops.includes(item)
+                                // }
+                              /> */}
+                                {item?.title}
+                              </label>
+                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              {item?.features?.length > 0 ? item?.features?.map((feature, i) => (
+                                <label
+                                key={i}
+                                className="flex items-center gap-2 text-sm"
+                              >
+                                <input
+                                type="checkbox"
+                                value={item?.title}
+                                {...register(`services_${idx}_${i}`)}
+                                className="w-[15px] h-[15px]"
+                                // disabled={
+                                //   selectedWorkshops.length >= 6 &&
+                                //   !selectedWorkshops.includes(item)
+                                // }
+                              />
+                                {feature?.name}
+                              </label>
+                              )):<label>No Service Found</label>}
+                              </div>
+                            </>
+                          ))}
+                        </div>
+                        <label className=" block mb-4 font-normal text-md mt-5">
                           Select WorkShop
                         </label>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -761,7 +805,7 @@ export default function RegistrationForm() {
         className="bg-cover bg-center w-full h-[40px] md:h-[63px] lg:h-[125px] "
         style={{ backgroundImage: `url(${bannerImg})` }}
       />
-      {showModal && <ProductModal onClose={() => setShowModal(false)} />}
+      {showModal && <ProductModal onClose={() => setShowModal(false)} selectedTickets={selectedTickets} register={register}/>}
     </div>
   );
 }

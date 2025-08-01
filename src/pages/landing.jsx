@@ -13,10 +13,11 @@ export default function TicketGrid() {
     setMounted(true);
   }, []);
 
-  const handleQuantityChange = (qty, title, price) => {
+  const handleQuantityChange = (qty, title, price,features) => {
     const updated = {
       qty,
       price,
+      features
     };
 
     setQuantities((prev) => {

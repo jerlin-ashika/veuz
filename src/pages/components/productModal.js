@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { workshopList } from "../../utils";
 import bannerImg from "../../images/common/modal_banner.png";
 
-export default function ProductModal({ onClose }) {
+export default function ProductModal({ onClose, selectedTickets, register }) {
   const [selected, setSelected] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isVisible, setIsVisible] = useState(false);
@@ -46,7 +46,7 @@ export default function ProductModal({ onClose }) {
             SELECT SOLUTIONS/PRODUCTS
           </h2>
           <button
-          type="button"
+            type="button"
             className="absolute top-3 right-3 text-white p-2 border-2 rounded-full leading-none font-bold"
             onClick={handleClose}
           >
@@ -73,7 +73,7 @@ export default function ProductModal({ onClose }) {
         </div>
 
         {/* Checkbox List */}
-        <div className="max-h-[300px] min-h-[300px] overflow-y-auto p-4 space-y-5">
+        {/* <div className="max-h-[300px] min-h-[300px] overflow-y-auto p-4 space-y-5">
           {filteredList.length > 0 ? (
             filteredList.map((item, idx) => (
               <label key={idx} className="flex items-center space-x-3">
@@ -89,12 +89,55 @@ export default function ProductModal({ onClose }) {
           ) : (
             <div className="text-gray-500">No matching items found.</div>
           )}
+        </div> */}
+        <div className="grid grid-cols-1 sm:grid-cols-1 gap-5 max-h-[300px] min-h-[300px] overflow-y-auto p-4">
+          {selectedTickets.map((item, idx) => (
+            <>
+              <label
+                key={idx}
+                className="flex items-center gap-2 font-normal text-md"
+              >
+                {/* <input
+                                type="checkbox"
+                                value={item?.title}
+                                {...register(`services_${idx}`)}
+                                className="w-[15px] h-[15px]"
+                                // disabled={
+                                //   selectedWorkshops.length >= 6 &&
+                                //   !selectedWorkshops.includes(item)
+                                // }
+                              /> */}
+                {item?.title}
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {item?.features?.length > 0 ? (
+                  item?.features?.map((feature, i) => (
+                    <label key={i} className="flex items-center gap-2 text-sm">
+                      <input
+                        type="checkbox"
+                        value={item?.title}
+                        {...register(`services_${idx}_${i}`)}
+                        className="w-[15px] h-[15px]"
+                        // disabled={
+                        //   selectedWorkshops.length >= 6 &&
+                        //   !selectedWorkshops.includes(item)
+                        // }
+                      />
+                      {feature?.name}
+                    </label>
+                  ))
+                ) : (
+                  <label>No Service Found</label>
+                )}
+              </div>
+            </>
+          ))}
         </div>
 
         {/* Footer Buttons */}
         <div className="flex justify-end space-x-3 px-6 py-4 border-t">
           <button
-          type="button"
+            type="button"
             className="border border-gray-500 px-4 py-2 rounded-lg hover:bg-gray-100"
             onClick={handleClose}
           >

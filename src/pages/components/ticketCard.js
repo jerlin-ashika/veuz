@@ -57,7 +57,7 @@ export function TicketCard({
   const [quantityState, setQuantityState] = useState(quantity || 0);
 
   useEffect(() => {
-    handleQuantityChange(quantityState, title, price);
+    handleQuantityChange(quantityState, title, price, features);
   }, [quantityState, quantity]);
   return (
     <div className="relative bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-900 rounded-3xl shadow-xl flex flex-col justify-between w-full  text-white">
